@@ -6,6 +6,9 @@
 # Mac
 *.DS_Store
 
+# IDE
+*.idea
+
 # User-specific files
 *.rsuser
 *.suo
