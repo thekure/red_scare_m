@@ -5,17 +5,17 @@ from sys import stdin
 class Node:
     def __init__(self, id, source=False, sink=False, isRed=False):
         self.id = id
-        self.adjacentEdges = set()
+        self.outgoingEdges = set()
         self.isSource = source
         self.isSink = sink
         self.isRed = isRed
 
-    def addEdge(self, edge):
-        self.adjacentEdges.add(edge)
+    def addOutgoingEdge(self, edge):
+        self.outgoingEdges.add(edge)
 
 
 class Edge:
-    def __init__(self, _from: Node, _to: Node, _capacity):
+    def __init__(self, _from: Node, _to: Node, _capacity=1):
         self._from = _from
         self._to = _to
         self._capacity = _capacity
@@ -84,14 +84,7 @@ class Graph:
         return self.dictOfEdges.get((edge._from, edge._to))
 
     def addEdge(self, edge: Edge):
-        thisEdge = self.getEdge(edge)
-
-        if thisEdge is None:
-            self.dictOfEdges.update({(edge._from, edge._to): edge})
-            return edge
-        else:
-            thisEdge._capacity += edge._capacity
-            return thisEdge
+        self.dictOfEdges.update({(edge._from, edge._to): edge})
 
     def getNode(self, id):
         return self.dictOfNodes.get(id)
@@ -108,7 +101,7 @@ class Graph:
         while not queue.empty():
             currentNode = queue.get()
 
-            for edge in currentNode.adjacentEdges:
+            for edge in currentNode.outgoingEdges:
                 otherNode = edge.getOther(currentNode)
 
                 if edge.residualCapacityTo(otherNode) > 0 and not markedNodes.get(
@@ -148,20 +141,22 @@ class Graph:
     def printGraph(self):
         for node in self.dictOfNodes.values():
             print("----NODE----")
-            print(node.id)
-            print(node.isSource)
-            print(node.isSink)
-            for edge in node.adjacentEdges:
-                print("----OUTGOING EDGE----")
-                print("From:", edge._from.id)
-                print("To:", edge._to.id)
+            print(f"ID: {node.id}")
+            print(f"isSource: {node.isSource}")
+            print(f"isSink: {node.isSink}")
+            print(f"isRed: {node.isRed}")
+            for edge in node.outgoingEdges:
+                print(f"----OUTGOING EDGE from node {node.id}----")
+                print("From: ", edge._from.id)
+                print("To: ", edge._to.id)
+            print()
 
-        for edge in self.dictOfEdges.values():
-            print("----EDGE----")
-            print("From:", edge._from.id)
-            print("To:", edge._to.id)
-            print("Capacity:", edge._capacity)
-            print("Flow:", edge._flow)
+        # for edge in self.dictOfEdges.values():
+        #     print("----EDGES----")
+        #     print("From:", edge._from.id)
+        #     print("To:", edge._to.id)
+        #     print("Capacity:", edge._capacity)
+        #     print("Flow:", edge._flow)
 
 
 # Graph, Node and Edge classes are implemented above.
@@ -188,39 +183,27 @@ def create_graph():
             graph.addNode(Node(id, isRed=isRed))
 
     for _ in range(num_edges):
-        _from, _to, _capacity = stdin.readline().split()
-        _capacity = int(_capacity)
-        _from = int(_from)
-        _to = int(_to)
+        _from, _direction, _to = stdin.readline().split()
+        isDirected = _direction == "->"
 
-        newEdge = Edge(graph.getNode(_from), graph.getNode(_to), _capacity)
+        edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
+        graph.addEdge(edge1)
+        graph.getNode(_from).addOutgoingEdge(edge1)
 
-        updatedEdge = graph.addEdge(newEdge)
-
-        graph.getNode(_from).addEdge(updatedEdge)
-        graph.getNode(_to).addEdge(updatedEdge)
+        if not isDirected:
+            edge2 = Edge(_from=graph.getNode(_to), _to=graph.getNode(_from))
+            graph.addEdge(edge2)
+            graph.getNode(_to).addOutgoingEdge(edge2)
 
     return num_nodes, graph
 
 
 def solve():
     nodes, graph = create_graph()
+    graph.printGraph()
 
     maxFlow = graph.findMaxFlowFF(nodes)
-
-    numberOfEdges = 0
-    stringList = []
-
-    for edge in graph.dictOfEdges.values():
-        if edge._flow > 0:
-            numberOfEdges += 1
-            result = str(edge._from.id) + " " + str(edge._to.id) + " " + str(edge._flow)
-            stringList.append(result)
-
-    stringList.sort()
-    print(nodes, maxFlow, numberOfEdges)
-    for ele in stringList:
-        print(ele)
+    print(f"maxflow: {maxFlow}")
 
 
 solve()
