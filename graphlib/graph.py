@@ -100,17 +100,3 @@ class Graph:
                 print("From: ", edge._from.id)
                 print("To: ", edge._to.id)
             print()
-
-    def removeRedNodes(self):
-        for node in self.dictOfNodes.values():
-            if node.isRed:
-                print(f"node is red")
-                self.dictOfNodes.pop(node.id)
-
-                for edge in self.dictOfEdges.values():
-                    if edge._from.id == node.id:
-                        print(f"removing edge - from == id")
-                        self.dictOfEdges.pop(edge)
-                    if edge._to.id == node.id:
-                        print(f"removing edge - to == id")
-                        self.dictOfEdges.pop(edge)
