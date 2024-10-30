@@ -34,4 +34,4 @@ def create_graph():
             graph.addEdge(edge2)
             graph.getNode(_to).addOutgoingEdge(edge2)
 
-    return num_nodes, graph
+    return graph

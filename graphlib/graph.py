@@ -12,6 +12,7 @@ class Node:
     def addOutgoingEdge(self, edge):
         self.outgoingEdges.add(edge)
 
+
 class Edge:
     def __init__(self, _from: Node, _to: Node, _capacity=1):
         self._from = _from
@@ -59,6 +60,7 @@ class Edge:
             self._capacity,
         )
 
+
 class Graph:
     def __init__(self):
         self.dictOfNodes = {}
@@ -85,6 +87,9 @@ class Graph:
 
     def getNode(self, id):
         return self.dictOfNodes.get(id)
+
+    def getNumNodes(self):
+        return len(self.dictOfNodes.keys())
 
     def findPathBFS(self, _from: Node, _to: Node, nodes):
         markedNodes = {}
@@ -147,4 +152,3 @@ class Graph:
                 print("From: ", edge._from.id)
                 print("To: ", edge._to.id)
             print()
-
