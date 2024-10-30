@@ -1,6 +1,7 @@
 from graph import Node, Edge, Graph
 from sys import stdin
 
+
 def create_graph():
     num_nodes, num_edges, num_red = map(int, stdin.readline().split())
     source, sink = stdin.readline().split()
