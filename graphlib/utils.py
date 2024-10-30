@@ -35,3 +35,11 @@ def create_graph():
             graph.getNode(_to).addOutgoingEdge(edge2)
 
     return graph
+
+""" Make a graph, G', which is a copy of the graph G, but with all the red colored nodes removed """
+def solve_none():
+    graph = create_graph()
+
+    graph.removeRedNodes()
+
+    graph.printGraph()
