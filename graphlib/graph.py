@@ -1,6 +1,3 @@
-from queue import Queue
-
-
 class Node:
     def __init__(self, id, source=False, sink=False, isRed=False):
         self.id = id
@@ -90,55 +87,6 @@ class Graph:
 
     def getNumNodes(self):
         return len(self.dictOfNodes.keys())
-
-    def findPathBFS(self, _from: Node, _to: Node, nodes):
-        markedNodes = {}
-        queue = Queue(maxsize=nodes)
-
-        markedNodes[_from.id] = True
-
-        queue.put(item=_from)  # and put it on the queue
-        path = {}
-
-        while not queue.empty():
-            currentNode = queue.get()
-
-            for edge in currentNode.outgoingEdges:
-                otherNode = edge.getOther(currentNode)
-
-                if edge.residualCapacityTo(otherNode) > 0 and not markedNodes.get(
-                    otherNode.id
-                ):
-                    path[otherNode.id] = edge
-                    markedNodes[otherNode.id] = True
-                    queue.put(otherNode)
-
-        return path, markedNodes.get(_to.id)
-
-    # Ford fulkerson that uses BFS
-    def findMaxFlowFF(self, nodes):
-        maxFlow = 0
-
-        path, isPath = self.findPathBFS(self.source, self.sink, nodes)
-
-        while isPath:
-            bottle = 9223372036854775807
-            v = self.sink
-
-            while v.id is not self.source.id:
-                bottle = min(bottle, path.get(v.id).residualCapacityTo(v))
-                v = path.get(v.id).getOther(v)
-
-            v = self.sink
-            while v.id is not self.source.id:
-                path.get(v.id).addResidualFlowTo(bottle, v)
-                v = path.get(v.id).getOther(v)
-
-            maxFlow += bottle
-
-            path, isPath = self.findPathBFS(self.source, self.sink, nodes)
-
-        return maxFlow
 
     def printGraph(self):
         for node in self.dictOfNodes.values():
