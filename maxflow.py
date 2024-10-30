@@ -3,11 +3,12 @@ from sys import stdin
 
 
 class Node:
-    def __init__(self, id, source=False, sink=False):
+    def __init__(self, id, source=False, sink=False, isRed=False):
         self.id = id
         self.adjacentEdges = set()
         self.isSource = source
         self.isSink = sink
+        self.isRed = isRed
 
     def addEdge(self, edge):
         self.adjacentEdges.add(edge)
@@ -168,24 +169,25 @@ class Graph:
 
 
 def create_graph():
-    nodes, edges, source, sink = stdin.readline().split()
-
-    nodes = int(nodes)
-    edges = int(edges)
-    source = int(source)
-    sink = int(sink)
+    num_nodes, num_edges, num_red = map(int, stdin.readline().split())
+    source, sink = stdin.readline().split()
 
     graph = Graph()
 
-    for node in range(nodes):
-        if node == source:
-            graph.addNode(Node(node, source=True))
-        elif node == sink:
-            graph.addNode(Node(node, sink=True))
+    for _ in range(num_nodes):
+        line = stdin.readline().split()
+        id = line[0]
+        isRed = False
+        if len(line) > 1:
+            isRed = True
+        if id == source:
+            graph.addNode(Node(id, source=True, isRed=isRed))
+        elif id == sink:
+            graph.addNode(Node(id, sink=True, isRed=isRed))
         else:
-            graph.addNode(Node(node))
+            graph.addNode(Node(id, isRed=isRed))
 
-    for _ in range(edges):
+    for _ in range(num_edges):
         _from, _to, _capacity = stdin.readline().split()
         _capacity = int(_capacity)
         _from = int(_from)
@@ -198,7 +200,7 @@ def create_graph():
         graph.getNode(_from).addEdge(updatedEdge)
         graph.getNode(_to).addEdge(updatedEdge)
 
-    return nodes, graph
+    return num_nodes, graph
 
 
 def solve():
