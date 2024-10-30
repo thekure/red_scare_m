@@ -1,4 +1,4 @@
-from graph import Node, Edge, Graph
+from graphlib.graph import Node, Edge, Graph
 from sys import stdin
 
 
