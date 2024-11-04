@@ -73,3 +73,44 @@ class DFS(PathFinder):
                     return path, True, markedNodes
 
         return path, False, markedNodes
+    
+    """ find all paths in a graph using DFS
+        source code: @chatGPT
+
+        returns: all_paths {}
+            a dictionary mapping from has_red to path
+
+        i.e. all_paths will have max 2 paths (one True and one False)
+    """
+    def find_all_paths(self, _from: Node, _to: Node):
+        all_paths = {}  # To store all found paths
+        path = []  # Current path being explored
+        visited = set()  # Set to keep track of visited nodes on the current path
+
+        def dfs_all_paths(currentNode, has_red):
+            if currentNode.isRed:
+                has_red = True
+            # Add current node to path and mark it as visited
+            path.append(currentNode)
+            visited.add(currentNode.id)
+
+            # If we reach the target node, add the current path to all_paths
+            if currentNode == _to:
+                all_paths[has_red] = list(path) # Make a copy of the path
+            else:
+                # Explore all outgoing edges from the current node
+                for edge in currentNode.outgoingEdges:
+                    otherNode = edge.getOther(currentNode)
+
+                    # Only proceed if the edge has residual capacity and the node has not been visited
+                    if edge.residualCapacityTo(otherNode) > 0 and otherNode.id not in visited:
+                        dfs_all_paths(otherNode, has_red)  # Recursive call to continue path
+
+            # Backtrack: remove the current node from path and visited set
+            path.pop()
+            visited.remove(currentNode.id)
+
+        # Start the DFS from the source node
+        dfs_all_paths(_from, has_red=False)
+        return all_paths
+        
