@@ -65,3 +65,15 @@ class NoneOrSome:
         else:
             print(False)
         
+
+class Alternating:
+    """ Performs a BFS while alternating between black / red nodes
+    """
+    def alternating(graph: Graph, pathfinder=BFS()):
+        num_nodes = graph.getNumNodes()
+        path, isPath = pathfinder.find_alternating_path(graph.source, graph.sink, num_nodes)
+
+        print(isPath)
+
+        # for edge in path.values():
+        #    edge.printEdge()

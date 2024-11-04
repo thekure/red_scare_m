@@ -34,6 +34,42 @@ class BFS(PathFinder):
                     queue.put(otherNode)
 
         return path, markedNodes.get(_to.id)
+    
+    def find_alternating_path(self, _from: Node, _to: Node, nodes, is_red=False):
+        markedNodes = {}
+        queue = Queue(maxsize=nodes)
+
+        markedNodes[_from.id] = True
+
+        queue.put(item=_from)
+        path = {}
+
+        while not queue.empty():
+            currentNode = queue.get()
+
+            for edge in currentNode.outgoingEdges:
+                otherNode = edge.getOther(currentNode)
+
+                if currentNode.isSource:
+                    # initially isRed is set to the first visited node's color
+                    is_red = otherNode.isRed
+
+                # if the node hasn't been visited and has the opposite color of the current node
+                if not markedNodes.get(otherNode.id):
+                    # if we're looking from source, we don't care about the color of the next node
+                    if currentNode.isSource:
+                        path[otherNode.id] = edge
+                        markedNodes[otherNode.id] = True
+                        queue.put(otherNode)
+                        is_red = not is_red # flip isRed
+                    # else we need to compare the colors and ensure they are different
+                    elif not currentNode.isSource and currentNode.isRed is not otherNode.isRed:
+                        path[otherNode.id] = edge
+                        markedNodes[otherNode.id] = True
+                        queue.put(otherNode)
+                        is_red = not is_red # flip isRed
+
+        return path, markedNodes.get(_to.id)
 
 
 class DFS(PathFinder):
