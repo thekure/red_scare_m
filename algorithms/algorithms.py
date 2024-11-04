@@ -1,5 +1,5 @@
 from graphlib.graph import Graph
-from algorithms.pathfinding import BFS
+from algorithms.pathfinding import BFS, DFS
 
 
 class MaxFlow:
@@ -33,6 +33,9 @@ class MaxFlow:
     
 
 class NoneOrSome:
+    """ Finds a path from S to T using BFS
+        The graph given to none() must be a none graph for this to work
+    """
     def none(graph: Graph, pathfinder=BFS()):
         num_nodes = graph.getNumNodes()
         path, isPath = pathfinder.find_path(graph.source, graph.sink, num_nodes)
@@ -49,50 +52,16 @@ class NoneOrSome:
                 v = path.get(v.id).getOther(v)
             print(f"{length}")
 
-    def some(graph: Graph):
-        # create the the memory table
-        print(f"numnodes: {graph.getNumNodes()}")
-        memory = [[False for i in range(graph.getNumNodes())] for j in range(graph.getNumNodes())]
-        for row in memory:
-            print(row)
 
-        # fill in the memory table
-        for node in graph.dictOfNodes.values():
-            node.printNode()
-            for edge in node.outgoingEdges:
-                print(f"memory[{int(node.id)}][{int(edge._to.id)}]")
-                memory[int(node.id)][int(edge._to.id)] = edge._to.isRed or edge._from.isRed
-                
-            
-            print()
-            
-        for row in memory:
-            print(row)
-        
-        # # start from the sink id
-        node = int(graph.sink.id)
+    """ The only way I was able to solve this, was to find all paths from S to T and filter them to only contain the one that has at least one red vertex in them.
+        I'm unsure whether or not this solution runs in polynomial time, but I don't know how to solve it differently
+    """
+    def some(graph: Graph, pathfinder=DFS()):
+        all_paths = pathfinder.find_all_paths(graph.source, graph.sink)
+        filtered_path = {key: value for key, value in all_paths.items() if key is True}
 
-        # this seems hacky, should we do something else?
-        possiblePath = -1
-        path = False
-        print(f"graphs source: {graph.source.id}")
-        print(f"initial node: {node}")
-        
-        while int(node) != int(graph.source.id):
-            if possiblePath + 1 == len(memory[0]):
-                path = False
-                break
-
-            possiblePath += 1
-            print(f"node: [{node}][{possiblePath}]")
-            
-            # there is a possible path
-            if memory[node][possiblePath]:
-                print(f"there is a possible path [{node}][{possiblePath}]")
-                node = possiblePath
-                path = True
-                possiblePath = -1
-
-        print(f"path found {path}")
-        return 
+        if len(filtered_path) == 1:
+            print(True)
+        else:
+            print(False)
         
