@@ -73,7 +73,11 @@ class Alternating:
         num_nodes = graph.getNumNodes()
         path, isPath = pathfinder.find_alternating_path(graph.source, graph.sink, num_nodes)
 
-        print(isPath)
+        if not isPath:
+            print("False")
+        else:
+            print(isPath)
 
+        # -- the following is just for printing the path that was found - useful for debugging
         # for edge in path.values():
-        #    edge.printEdge()
+        #     edge.printEdge()
