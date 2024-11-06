@@ -68,6 +68,9 @@ def create_weighted_graph_based_on_reds():
         graph.getNode(_from).addOutgoingEdge(edge1)
 
         if not isDirected:
+            # edge's weight is based only on the colour of the right node
+            weight = 1 if graph.getNode(_from).isRed else 0
+
             edge2 = Edge(_from=graph.getNode(_to), _to=graph.getNode(_from), _capacity=weight)
             graph.addEdge(edge2)
             graph.getNode(_to).addOutgoingEdge(edge2)
