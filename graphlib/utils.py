@@ -25,7 +25,12 @@ def create_graph():
         _from, _direction, _to = stdin.readline().split()
         isDirected = _direction == "->"
 
+        if(_from == _to): # Check for loops.
+            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
+            continue
+
         edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
+
         graph.addEdge(edge1)
         graph.getNode(_from).addOutgoingEdge(edge1)
 
@@ -59,6 +64,11 @@ def create_graph_without_red():
     for _ in range(num_edges):
         _from, _direction, _to = stdin.readline().split()
         isDirected = _direction == "->"
+
+        if (_from == _to):  # Check for loops.
+            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
+            continue
+
         from_node = graph.dictOfNodes.get(_from)
         to_node = graph.dictOfNodes.get(_to)
 
