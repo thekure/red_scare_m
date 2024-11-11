@@ -1,5 +1,6 @@
 from queue import Queue
 from abc import ABC, abstractmethod
+from sys import maxsize
 
 from graphlib.graph import Node
 
@@ -73,3 +74,45 @@ class DFS(PathFinder):
                     return path, True, markedNodes
 
         return path, False, markedNodes
+
+    def is_acyclic(self, graph):
+        visited = {}
+        for node in graph.dictOfNodes.values():
+            if node.id not in visited:
+                if not self.find_cycle_helper(node, None, visited):
+                    return False
+        return True
+
+    def find_cycle_helper(self, node, parent, visited):
+        visited[node.id] = True
+        for edge in node.outgoingEdges:
+            neighbor = edge.getOther(node)
+            if neighbor.id not in visited:
+                if not self.find_cycle_helper(neighbor, node, visited):
+                    return False
+            elif neighbor.id != parent.id:
+                # Consider finding a cycle only if we find a visited node that isn't the parent
+                return False
+        return True
+
+
+class BellmanFord(PathFinder):
+    def find_path(self, graph):
+        _from = graph.source
+        dist = {node_id: maxsize for node_id in graph.dictOfNodes}
+        dist[_from.id] = 0
+        V = graph.getNumNodes()
+
+        for i in range(V):
+            for edge in graph.dictOfEdges.values():
+                u = edge._from.id
+                v = edge._to.id
+                weight = edge._capacity
+
+                if dist[u] != maxsize and dist[u] + weight < dist[v]:
+                    if i == V-1:
+                        return -1 # negative cycle
+                    dist[v] = dist[u] + weight
+
+        dist = {node_id: abs(value) for node_id, value in dist.items()}
+        return dist
