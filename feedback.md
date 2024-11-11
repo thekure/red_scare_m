@@ -1,18 +1,23 @@
 ## 06/11 
 
 ### questions:
-1. none: if s or t is red, what happens if there is NO direct s-t edge
-formulation - vi ∈/ R if 1 < i < l means don't count s and t.
+1. none: if s or t is red, what happens if there is NO direct s-t edge?
+
+See formulation - v_i ∈/ R if 1 < i < l means don't count s and t.
+
 2. same "well-defined" class for all algs?
+
 *there may be graphs with loops - ignore loops if we want, or do check. 
 dont have to be the same class for some and many
+
 3. alternate - is the path supposed to be alternate counting colour of source.
-colour of s n t matters!
+
+The colour of s n t matters!
 
 ### Random notes
-- Few - it should be bad to enter but not leave a red vertex. convert to digraph (we do)
+- Few - it should be bad to enter but not to leave a red vertex. convert to digraph (we do)
 - Some, Many: NP-Hard. 
-be precise for which type of graph we can and cannot solve, with solution.
+be precise for which type of graph we can and cannot solve, with solutions.
 
 ### Next Steps
 1. Test: None, Few, Alternate (Group1)
