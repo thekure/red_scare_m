@@ -20,4 +20,3 @@ if pathExists:
     print(length)
 else:
     print(-1)
-
