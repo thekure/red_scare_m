@@ -1,3 +1,4 @@
+from collections import deque
 from queue import Queue
 from abc import ABC, abstractmethod
 from sys import maxsize
@@ -28,14 +29,14 @@ class BFS(PathFinder):
                 otherNode = edge.getOther(currentNode)
 
                 if edge.residualCapacityTo(otherNode) > 0 and not markedNodes.get(
-                    otherNode.id
+                        otherNode.id
                 ):
                     path[otherNode.id] = edge
                     markedNodes[otherNode.id] = True
                     queue.put(otherNode)
 
         return path, markedNodes.get(_to.id)
-    
+
     def find_alternating_path(self, _from: Node, _to: Node, nodes):
         markedNodes = {}
         queue = Queue(maxsize=nodes)
@@ -69,7 +70,7 @@ class DFS(PathFinder):
         return path, last_marked
 
     def find_path_helper(
-        self, _from: Node, _to: Node, nodes, path=None, markedNodes=None
+            self, _from: Node, _to: Node, nodes, path=None, markedNodes=None
     ):
         if path is None:
             path = {}
@@ -82,7 +83,7 @@ class DFS(PathFinder):
             otherNode = edge.getOther(_from)
 
             if edge.residualCapacityTo(otherNode) > 0 and not markedNodes.get(
-                otherNode.id
+                    otherNode.id
             ):
                 path[otherNode.id] = edge
                 markedNodes[otherNode.id] = True
@@ -119,45 +120,37 @@ class DFS(PathFinder):
                 return False
         return True
 
-    """ find all paths in a graph using DFS
-        source code: @chatGPT
+class BinaryBFS(PathFinder):
+    def find_path(self, graph):
+        # use double-ended queue:
+        # add node to the front of the deque if its weight is 0
+        # add node to the back of the deque if its weight is 1
 
-        returns: all_paths {}
-            a dictionary mapping from has_red to path
+        _from = graph.source
+        _to = graph.sink
 
-        i.e. all_paths will have max 2 paths (one True and one False)
-    """
-    def find_all_paths(self, _from: Node, _to: Node):
-        all_paths = {}  # To store all found paths
-        path = []  # Current path being explored
-        visited = set()  # Set to keep track of visited nodes on the current path
+        dist = {node_id: maxsize for node_id in graph.dictOfNodes}
+        dist[_from.id] = 0
 
-        def dfs_all_paths(currentNode, has_red):
-            if currentNode.isRed:
-                has_red = True
-            # Add current node to path and mark it as visited
-            path.append(currentNode)
-            visited.add(currentNode.id)
+        queue = deque()
+        queue.append(_from)
 
-            # If we reach the target node, add the current path to all_paths
-            if currentNode == _to:
-                all_paths[has_red] = list(path) # Make a copy of the path
-            else:
-                # Explore all outgoing edges from the current node
-                for edge in currentNode.outgoingEdges:
-                    otherNode = edge.getOther(currentNode)
+        while queue:
+            current_node = queue.popleft()
 
-                    # Only proceed if the edge has residual capacity and the node has not been visited
-                    if edge.residualCapacityTo(otherNode) > 0 and otherNode.id not in visited:
-                        dfs_all_paths(otherNode, has_red)  # Recursive call to continue path
+            for edge in current_node.outgoingEdges:
+                other_node = edge.getOther(current_node)
 
-            # Backtrack: remove the current node from path and visited set
-            path.pop()
-            visited.remove(currentNode.id)
+                new_distance = dist[current_node.id] + edge._capacity
+                if dist[other_node.id] > new_distance:
+                    dist[other_node.id] = new_distance
 
-        # Start the DFS from the source node
-        dfs_all_paths(_from, has_red=False)
-        return all_paths
+                    if edge._capacity == 0:
+                        queue.appendleft(other_node)
+                    else:
+                        queue.append(other_node)
+
+        return dist[_to.id]
 
 
 class BellmanFord(PathFinder):
@@ -174,8 +167,8 @@ class BellmanFord(PathFinder):
                 weight = edge._capacity
 
                 if dist[u] != maxsize and dist[u] + weight < dist[v]:
-                    if i == V-1:
-                        return -1 # negative cycle
+                    if i == V - 1:
+                        return -1  # negative cycle
                     dist[v] = dist[u] + weight
 
         dist = {node_id: abs(value) for node_id, value in dist.items()}
