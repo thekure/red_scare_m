@@ -67,6 +67,7 @@ class Graph:
         self.dictOfEdges = {}
         self.source = None
         self.sink = None
+        self.type = None
 
     def addNode(self, node: Node):
         if node.isSink:
@@ -102,4 +103,5 @@ class Graph:
                 print(f"----OUTGOING EDGE from node {node.id}----")
                 print("From: ", edge._from.id)
                 print("To: ", edge._to.id)
+                print("Capacity: ", edge._capacity)
             print()
