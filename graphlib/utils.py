@@ -12,6 +12,7 @@ def create_graph():
         line = stdin.readline().split()
         id = line[0]
         isRed = False
+
         if len(line) > 1:
             isRed = True
         if id == source:
@@ -39,6 +40,7 @@ def create_graph():
             graph.getNode(_to).addOutgoingEdge(edge2)
 
     return graph
+  
 
 
 def create_graph_without_red():
