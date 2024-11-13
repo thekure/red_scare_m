@@ -1,11 +1,32 @@
-from algorithms.pathfinding import DFS
+from algorithms.pathfinding import DFS, BFS
 from graphlib.utils import create_graph
-from algorithms.maxflow import MaxFlow
+from algorithms.algorithms import MaxFlow, Alternating
+
+
+"""
+def solve_none():
+    graph = create_none_graph()
+    NoneOrSome.none(graph)
+
+def solve_some():
+    graph = create_graph()
+    NoneOrSome.some(graph)
+
+def solve_alternating():
+    graph = create_graph()
+    Alternating.alternating(graph)
+"""
+
+    
+#solve_none()
+#solve_some()
+#solve_alternating()
 
 graph = create_graph()
-graph.printGraph()
 
-maxFlow = MaxFlow.fordFulkerson(graph)
+# graph.printGraph()
+
+# maxFlow = MaxFlow.fordFulkerson(graph)
 # maxFlow = MaxFlow.fordFulkerson(graph, DFS())
 
-print(f"maxflow: {maxFlow}")
+# print(f"maxflow: {maxFlow}")
