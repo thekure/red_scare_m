@@ -157,6 +157,11 @@ def create_weighted_graph_based_on_reds(negative_weight=False, weight_only_direc
     for _ in range(num_edges):
         _from, _direction, _to = stdin.readline().split()
         isDirected = _direction == "->"
+
+        if (_from == _to):  # Check for loops.
+            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
+            continue
+
         unidrectedNoWeights = not isDirected and weight_only_directed
 
         graph.type = "directed" if isDirected else "undirected"
