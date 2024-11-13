@@ -8,6 +8,9 @@ class Node:
 
     def addOutgoingEdge(self, edge):
         self.outgoingEdges.add(edge)
+    
+    def printNode(self):
+        print(f"ID: {self.id} isSource: {self.isSource} isSink: {self.isSink} isRed: {self.isRed}")
 
 
 class Edge:
