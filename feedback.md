@@ -59,3 +59,14 @@ Types of graphs:
 Sofus: None
 Gwen: Alt
 Silke: Few 
+
+## 13/11
+
+### qs:
+
+- "i solved each instance G by..." how specific?
+todo: run FAN algos on smallworld (need hand solution)
+
+- do we run on all graphs 500 vertices as suggested in report template?
+
+- 
