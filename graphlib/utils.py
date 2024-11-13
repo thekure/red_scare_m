@@ -25,12 +25,11 @@ def create_graph():
         _from, _direction, _to = stdin.readline().split()
         isDirected = _direction == "->"
 
-        if(_from == _to): # Check for loops.
+        if (_from == _to):  # Check for loops.
             print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
         edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
-
         graph.addEdge(edge1)
         graph.getNode(_from).addOutgoingEdge(edge1)
 
@@ -58,7 +57,7 @@ def create_graph_without_red():
             graph.addNode(Node(id, source=True, isRed=isRed))
         elif id == sink:
             graph.addNode(Node(id, sink=True, isRed=isRed))
-        else:
+        elif not isRed:
             graph.addNode(Node(id, isRed=isRed))
 
     for _ in range(num_edges):
@@ -69,13 +68,9 @@ def create_graph_without_red():
             print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
-        from_node = graph.dictOfNodes.get(_from)
-        to_node = graph.dictOfNodes.get(_to)
+        noRedNodes = graph.getNode(_from) is not None and graph.getNode(_to) is not None
 
-        """ I'm unsure about what should happen when the sink or source is red """
-        if (not from_node.isRed and not to_node.isRed) or (
-            from_node.isSource and to_node.isSink  # idk about this...
-        ):
+        if noRedNodes:
             edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
             graph.addEdge(edge1)
             graph.getNode(_from).addOutgoingEdge(edge1)

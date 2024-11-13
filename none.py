@@ -1,31 +1,22 @@
 from algorithms.pathfinding import BFS
-from graphlib.utils import create_graph_without_red
+from graphlib.utils import *
+from algorithms.maxflow import MaxFlow
 
 graph = create_graph_without_red()
 # graph.printGraph()
+path, pathExists = BFS().find_path(graph.source, graph.sink, graph.getNumNodes())
 
-path, hasPathBeenFound = BFS().find_path(graph.source, graph.sink, graph.getNumNodes())
+for edge in path.values():
+    print(edge.printEdge())
 
-v = graph.sink
-length = 0
-path_lst = [v.id]
-
-while v.id is not graph.source.id:
-    other_v = path.get(v.id)
-    if other_v is None:
-        break
-    else:
-        v = path.get(v.id).getOther(v)
+if pathExists:
+    length = 0
+    current_node = graph.sink
+    while current_node != graph.source:
+        print(current_node.id)
         length += 1
-        path_lst.append(v.id)
-
-if hasPathBeenFound:
-    print(f"length of shortest path: {length}")
+        edge = path.get(current_node.id)
+        current_node = edge.getOther(current_node)
+    print(length)
 else:
-    print(f"no path: {-1}")
-
-
-# print(f"has path been found: {hasPathBeenFound}")
-
-# for i in reversed(path_lst):
-#     print(i)
+    print(-1)
