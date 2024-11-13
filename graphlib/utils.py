@@ -27,7 +27,6 @@ def create_graph():
         isDirected = _direction == "->"
 
         if (_from == _to):  # Check for loops.
-            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
         edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
@@ -66,7 +65,6 @@ def create_graph_without_red():
         isDirected = _direction == "->"
 
         if (_from == _to):  # Check for loops.
-            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
         noRedNodes = graph.getNode(_from) is not None and graph.getNode(_to) is not None
@@ -110,7 +108,6 @@ def create_graphs_without_sink_and_without_source():
         isDirected = _direction == "->"
 
         if (_from == _to):  # Check for loops.
-            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
         if _from != sink and _to != sink:
@@ -159,7 +156,6 @@ def create_weighted_graph_based_on_reds(negative_weight=False, weight_only_direc
         isDirected = _direction == "->"
 
         if (_from == _to):  # Check for loops.
-            print(f"Loop detected and skipped, from {_from} to {_to}, direction {_direction}.")
             continue
 
         unidrectedNoWeights = not isDirected and weight_only_directed
@@ -217,7 +213,7 @@ def create_normal_graph_and_without_red():
         isDirected = _direction == "->"
         noRedNodes = graph_without_red.getNode(_from) is not None and graph_without_red.getNode(_to) is not None
 
-        if _to != _from:
+        if _to != _from: # avoid loops
             edge1 = Edge(_from=graph.getNode(_from), _to=graph.getNode(_to))
             graph.addEdge(edge1)
             graph.getNode(_from).addOutgoingEdge(edge1)

@@ -92,6 +92,7 @@ class Graph:
     def getNumNodes(self):
         return len(self.dictOfNodes.keys())
 
+    # For debugging
     def printGraph(self):
         for node in self.dictOfNodes.values():
             print("----NODE----")

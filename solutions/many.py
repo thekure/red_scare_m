@@ -3,7 +3,7 @@ from sys import maxsize
 from algorithms.pathfinding import BellmanFord, BFS, DFS
 from graphlib.utils import create_weighted_graph_based_on_reds
 
-def many_graph():
+def solve():
     graph = create_weighted_graph_based_on_reds(negative_weight=True, weight_only_directed=True)
     res = None
 
@@ -48,6 +48,3 @@ def many_undirected_acyclic_graph(graph):
         return reds
     else:
         return -1
-
-
-many_graph()
