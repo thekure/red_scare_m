@@ -17,23 +17,24 @@ def solve():
     if res is None:
         print("NP-hard")
     elif res == -1:
-        print("Many -> No path between source and sink")
+        print(-1) # no path
     else:
-        print(f"Many -> Maximum number of reds from {graph.source.id} to {graph.sink.id} is: {res}")
+        print(res)
 
 
 def many_directed_without_negative_cycles(graph):
-    reds = 1 if graph.source.isRed else 0
-    res = BellmanFord().find_path(graph)
+    result = BellmanFord().find_path(graph)
 
-    if res == -1: # negative weight cycle
+    if result == -1: # negative weight cycle
         return None
-    elif reds == maxsize:
-        return -1
     else:
         _to = graph.sink
-        reds += res[_to.id]
-        return reds
+        reds = result[_to.id]
+        if reds == maxsize:
+            return -1
+        else:
+            reds += 1 if graph.source.isRed else 0
+            return reds
 
 def many_undirected_acyclic_graph(graph):
     reds = 1 if graph.source.isRed else 0
