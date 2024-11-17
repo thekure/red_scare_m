@@ -35,7 +35,16 @@ class Some:
             path, exists = BFS().find_path(graph_original.source, graph_original.sink, graph_original.getNumNodes())
 
             if exists:
-                print("True")
+                reds = 1 if graph_original.source.isRed else 0
+                current_node = graph_original.sink
+                while current_node != graph_original.source:
+                    reds += 1 if current_node.isRed else 0
+                    edge = path.get(current_node.id)
+                    current_node = edge.getOther(current_node)
+                if reds != 0:
+                    print("True")
+                else:
+                    print("False")
             else:
                 print("False")
 
