@@ -6,11 +6,20 @@ The idea of this solution is to first find a path from the source to all red ver
 one, then from the current red vertex to sink, and stop if 2 paths are found for the same red vertex.
 This works for DAG (Directed Acyclic Graphs)
 For an Undirected Acyclic Graph (tree) => one or no path at all between source and sink => use BFS
++ Easiest scenario: For all graphs, if a path exists from s to t and s or t are red => True
 """
 
 class Some:
 
     def solve(graph_original, graph_without_sink, graph_without_source):
+        # easiest scenario
+        if graph_original.source.isRed or graph_original.sink.isRed:
+            path, exists = BFS().find_path(graph_original.source, graph_original.sink, graph_original.getNumNodes())
+
+            if exists:
+                print("True")
+                return
+
         if graph_original.type == "directed":
             found = False
             for node in graph_without_sink.dictOfNodes.values():
@@ -35,7 +44,16 @@ class Some:
             path, exists = BFS().find_path(graph_original.source, graph_original.sink, graph_original.getNumNodes())
 
             if exists:
-                print("True")
+                reds = 1 if graph_original.source.isRed else 0
+                current_node = graph_original.sink
+                while current_node != graph_original.source:
+                    reds += 1 if current_node.isRed else 0
+                    edge = path.get(current_node.id)
+                    current_node = edge.getOther(current_node)
+                if reds != 0:
+                    print("True")
+                else:
+                    print("False")
             else:
                 print("False")
 
