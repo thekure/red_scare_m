@@ -86,6 +86,7 @@ def create_graphs_without_sink_and_without_source():
     num_nodes, num_edges, num_red = map(int, stdin.readline().split())
     source, sink = stdin.readline().split()
 
+    graph_original = Graph()
     graph_without_sink = Graph()
     graph_without_source = Graph()
 
@@ -97,11 +98,14 @@ def create_graphs_without_sink_and_without_source():
             isRed = True
         if id == source:
             graph_without_sink.addNode(Node(id, source=True, isRed=isRed))
+            graph_original.addNode(Node(id, source=True, isRed=isRed))
         elif id == sink:
             graph_without_source.addNode(Node(id, sink=True, isRed=isRed))
+            graph_original.addNode(Node(id, sink=True, isRed=isRed))
         else:
             graph_without_sink.addNode(Node(id, isRed=isRed))
             graph_without_source.addNode(Node(id, isRed=isRed))
+            graph_original.addNode(Node(id, isRed=isRed))
 
     for _ in range(num_edges):
         _from, _direction, _to = stdin.readline().split()
@@ -109,6 +113,17 @@ def create_graphs_without_sink_and_without_source():
 
         if (_from == _to):  # Check for loops.
             continue
+
+        graph_original.type = "directed" if isDirected else "undirected"
+
+        edge1 = Edge(_from=graph_original.getNode(_from), _to=graph_original.getNode(_to))
+        graph_original.addEdge(edge1)
+        graph_original.getNode(_from).addOutgoingEdge(edge1)
+
+        if not isDirected:
+            edge2 = Edge(_from=graph_original.getNode(_to), _to=graph_original.getNode(_from))
+            graph_original.addEdge(edge2)
+            graph_original.getNode(_to).addOutgoingEdge(edge2)
 
         if _from != sink and _to != sink:
             edge1 = Edge(_from=graph_without_sink.getNode(_from), _to=graph_without_sink.getNode(_to))
@@ -130,7 +145,7 @@ def create_graphs_without_sink_and_without_source():
                 graph_without_source.addEdge(edge2)
                 graph_without_source.getNode(_to).addOutgoingEdge(edge2)
 
-    return graph_without_sink, graph_without_source
+    return graph_original, graph_without_sink, graph_without_source
 
 def create_weighted_graph_based_on_reds(negative_weight=False, weight_only_directed=False):
     num_nodes, num_edges, num_red = map(int, stdin.readline().split())
