@@ -13,11 +13,12 @@ class Some:
 
     def solve(graph_original, graph_without_sink, graph_without_source):
         # easiest scenario
-        path, exists = BFS().find_path(graph_original.source, graph_original.sink, graph_original.getNumNodes())
+        if graph_original.source.isRed or graph_original.sink.isRed:
+            path, exists = BFS().find_path(graph_original.source, graph_original.sink, graph_original.getNumNodes())
 
-        if exists and (graph_original.source.isRed or graph_original.sink.isRed):
-            print("True")
-            return
+            if exists:
+                print("True")
+                return
 
         if graph_original.type == "directed":
             found = False
