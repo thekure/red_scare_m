@@ -7,8 +7,9 @@ from graphlib.utils import create_weighted_graph_based_on_reds
 class Few:
 
     def solve(graph: Graph):
-        dist = 1 if graph.source.isRed else 0
-        dist += BinaryBFS().find_path(graph)
+        dist = BinaryBFS().find_path(graph)
 
-        if dist != maxsize: print(dist)
+        if dist != maxsize:
+            dist += 1 if graph.source.isRed else 0
+            print(dist)
         else: print(-1)
