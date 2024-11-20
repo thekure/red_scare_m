@@ -26,8 +26,8 @@ def solve_some_using_none():
     Some_Using_None.solve(g, g_without_red)
 
 def solve_some_idea():
-    g_without_sink, g_without_source = create_graphs_without_sink_and_without_source()
-    Some.solve(g_without_sink, g_without_source)
+    g, g_without_sink, g_without_source = create_graphs_without_sink_and_without_source()
+    Some.solve(g, g_without_sink, g_without_source)
 
 def solve_many():
     many.solve()
@@ -40,6 +40,7 @@ solve_none()
 #solve_alternating()
 
 # SOME
+solve_some_idea()
 #solve_some_using_none()
 
 # MANY
