@@ -4,7 +4,7 @@ from solutions import many
 from solutions.alternating import Alternating
 from solutions.none import _None
 from solutions.few import Few
-from solutions.some_idea import Some_Idea
+from solutions.some import Some
 from solutions.some_using_none import Some_Using_None
 
 
@@ -25,8 +25,8 @@ def solve_some_using_none():
     Some_Using_None.solve(g, g_without_red)
 
 def solve_some_idea():
-    g_without_sink, g_without_source = create_graphs_without_sink_and_without_source()
-    Some_Idea.solve(g_without_sink, g_without_source)
+    g, g_without_sink, g_without_source = create_graphs_without_sink_and_without_source()
+    Some.solve(g, g_without_sink, g_without_source)
 
 def solve_many():
     many.solve()
@@ -37,9 +37,10 @@ def solve_many():
 # NONE ---- FEW ---- ALTERNATING
 #solve_none()
 #solve_few()
-solve_alternating()
+#solve_alternating()
 
 # SOME
+solve_some_idea()
 #solve_some_using_none()
 
 # MANY
