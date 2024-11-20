@@ -4,8 +4,9 @@ To run main.py on an input file:
 
     python main.py < from_thore/data/{name-of-datafile}
 
-Main currently constructs a graph from the input file it is given.
-As it is now, the Ford Fulkerson algorithm is run on the graph, just to ensure that it works as intended. This will of course be changed throughout whatever tasks we're solving.
+Main is currently set to run Some. Comment and uncomment in main to change what problem to run.
+
+The solutions to the problems can be found in the solutions folder. Disregard the files with the same name in the root folder.
 
 # Red Scare! data format (From Thore's repository)
 
