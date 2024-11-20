@@ -100,25 +100,6 @@ class DFS(PathFinder):
 
         return path, False, markedNodes
 
-    def is_acyclic(self, graph):
-        visited = {}
-        for node in graph.dictOfNodes.values():
-            if node.id not in visited:
-                if not self.find_cycle_helper(node, None, visited):
-                    return False
-        return True
-
-    def find_cycle_helper(self, node, parent, visited):
-        visited[node.id] = True
-        for edge in node.outgoingEdges:
-            neighbor = edge.getOther(node)
-            if neighbor.id not in visited:
-                if not self.find_cycle_helper(neighbor, node, visited):
-                    return False
-            elif neighbor.id != parent.id:
-                # Consider finding a cycle only if we find a visited node that isn't the parent
-                return False
-        return True
 
 class BinaryBFS(PathFinder):
     def find_path(self, graph):

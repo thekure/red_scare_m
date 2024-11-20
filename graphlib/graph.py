@@ -97,6 +97,63 @@ class Graph:
     def getNumNodes(self):
         return len(self.dictOfNodes.keys())
 
+    def isCyclic(self):
+        """
+        Check if the graph contains a cycle.
+        Returns True if the graph is cyclic, False otherwise.
+        Handles both directed and undirected graphs.
+        """
+        visited = set()
+
+        def dfs_directed(node, recStack):
+            # Mark the current node as visited and add to recursion stack
+            visited.add(node)
+            recStack.add(node)
+
+            # Traverse all outgoing edges
+            for edge in node.outgoingEdges:
+                neighbor = edge._to
+                if neighbor not in visited:
+                    if dfs_directed(neighbor, recStack):
+                        return True
+                elif neighbor in recStack:
+                    # A cycle is detected
+                    return True
+
+            # Remove the node from recursion stack after exploration
+            recStack.remove(node)
+            return False
+
+        def dfs_undirected(node, parent):
+            # Mark the current node as visited
+            visited.add(node)
+
+            # Traverse all outgoing edges
+            for edge in node.outgoingEdges:
+                neighbor = edge._to
+                if neighbor not in visited:
+                    if dfs_undirected(neighbor, node):
+                        return True
+                elif neighbor != parent:
+                    # A cycle is detected (ignoring the trivial parent backtrack)
+                    return True
+
+            return False
+
+        # Choose the correct DFS method based on the graph type
+        if self.type == "directed":
+            for node in self.dictOfNodes.values():
+                if node not in visited:
+                    if dfs_directed(node, set()):
+                        return True
+        elif self.type == "undirected":
+            for node in self.dictOfNodes.values():
+                if node not in visited:
+                    if dfs_undirected(node, None):
+                        return True
+
+        return False
+
     # For debugging
     def printGraph(self):
         for node in self.dictOfNodes.values():

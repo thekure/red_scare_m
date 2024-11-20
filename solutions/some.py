@@ -15,7 +15,7 @@ For an Undirected Acyclic Graph (tree) => one or no path at all between source a
 class Some:
     def solve(graph_original, graph_without_sink, graph_without_source):
         # easiest scenario
-        is_acyclic = DFS().is_acyclic(graph_original)
+        is_acyclic = not graph_original.isCyclic()
         if graph_original.source.isRed or graph_original.sink.isRed:
             path, exists = BFS().find_path(
                 graph_original.source, graph_original.sink, graph_original.getNumNodes()
@@ -25,7 +25,7 @@ class Some:
                 print("True")
                 return
 
-        if graph_original.type == "directed":  # TODO: add check for acyclic
+        if graph_original.type == "directed" and is_acyclic:  # TODO: add check for acyclic
             found = False
             for node in graph_without_sink.dictOfNodes.values():
                 # Skip non-red nodes and source/sink
