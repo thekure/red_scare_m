@@ -15,7 +15,7 @@ def solve():
         res = many_undirected_acyclic_graph(graph)
 
     if res is None:
-        print("NP-hard")
+        print("?!")
     elif res == -1:
         print(-1) # no path
     else:

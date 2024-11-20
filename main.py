@@ -13,6 +13,7 @@ from solutions.some import Some
 from solutions.some_using_none import Some_Using_None
 
 
+
 def solve_alternating():
     g = create_graph()
     Alternating.solve(g)
@@ -49,7 +50,6 @@ def solve_some_idea():
 def solve_many():
     many.solve()
 
-
 # uncomment/comment to enable/disable which problem to solve
 
 # NONE ---- FEW ---- ALTERNATING
@@ -63,3 +63,4 @@ solve_some_idea()
 
 # MANY
 # solve_many()
+
