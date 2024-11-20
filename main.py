@@ -32,20 +32,6 @@ def solve_some_idea():
 def solve_many():
     many.solve()
 
-
-
-
-#def fill_table():
-    # All these lines needs a fresh input, so the filename should be read every time.
-    # n = the first integer in the input
-    # A = Alternating.solve(create_graph())
-    # F = Few.solve(create_weighted_graph_based_on_reds())
-    # M = many.solve()
-    # N = _None.solve(create_graph_without_red())
-    # S = Some.solve(create_graphs_without_sink_and_without_source())
-
-
-
 # uncomment/comment to enable/disable which problem to solve
 
 # NONE ---- FEW ---- ALTERNATING
