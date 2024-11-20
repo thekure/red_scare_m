@@ -134,13 +134,38 @@ for file_path in glob.glob('from_thore/data/*.txt'):
             print(f"Timed out on {file_name}")
             results_many[file_name] = None  # Store None for timeout cases
 
+print()
+print("Processing some...")
+results_some = {}
+
+for file_path in glob.glob('from_thore/data/*.txt'):
+    file_name = file_path.split('/')[-1]  # Get the filename only (without the path)
+
+    with open(file_path, 'r') as f:
+        try:
+            # Run the subprocess and capture the output
+            result = subprocess.run(
+                ['python3', 'some.py'],  # Run the script (can be replaced with your script)
+                stdin=f,  # Provide input via stdin
+                capture_output=True,  # Capture stdout and stderr
+                text=True  # Make sure the output is captured as text
+            )
+
+            # Store the filename and its corresponding output in the dictionary
+            print(".", end="")
+            results_some[file_name] = result.stdout.strip()  # .strip() to remove any extra newlines
+
+        except subprocess.TimeoutExpired:
+            print(f"Timed out on {file_name}")
+            results_some[file_name] = None  # Store None for timeout cases
+
 
 # Create or overwrite the 'results.txt' file and write the table header
 print()
 print("Writing results...")
 with open('results.txt', 'w') as f:
     # Write the header line to the file
-    f.write("Instance name\t\tn\t\tA\t\tF\t\tM\t\tN\n")
+    f.write("Instance name\t\tn\t\tA\t\tF\t\tM\t\tN\t\tS\n")
 
     # Iterate over each file in results_none (or any dictionary, since they should have the same keys)
     for file_name in instances:
@@ -153,6 +178,8 @@ with open('results.txt', 'w') as f:
         F = results_few.get(file_name, "Timeout" if results_few.get(file_name) is None else "-1")
         M = results_many.get(file_name, "Timeout" if results_many.get(file_name) is None else "-1")
         N = results_none.get(file_name, "Timeout" if results_none.get(file_name) is None else "-1")
+        S = results_some.get(file_name, "Timeout" if results_some.get(file_name) is None else "-1")
+
 
         # Write each row in the desired format
-        f.write(f"{instance_name}\t\t{nodes}\t\t{A}\t\t{F}\t\t{M}\t\t{N}\n")
+        f.write(f"{instance_name}\t\t{nodes}\t\t{A}\t\t{F}\t\t{M}\t\t{N}\t\t{S}\n")
