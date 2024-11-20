@@ -4,8 +4,9 @@ from solutions import many
 from solutions.alternating import Alternating
 from solutions.none import _None
 from solutions.few import Few
-from solutions.some_idea import Some_Idea
+from solutions.some import Some
 from solutions.some_using_none import Some_Using_None
+
 
 
 def solve_alternating():
@@ -26,24 +27,40 @@ def solve_some_using_none():
 
 def solve_some_idea():
     g_without_sink, g_without_source = create_graphs_without_sink_and_without_source()
-    Some_Idea.solve(g_without_sink, g_without_source)
+    Some.solve(g_without_sink, g_without_source)
 
 def solve_many():
     many.solve()
 
 
+
+
+#def fill_table():
+    # All these lines needs a fresh input, so the filename should be read every time.
+    # n = the first integer in the input
+    # A = Alternating.solve(create_graph())
+    # F = Few.solve(create_weighted_graph_based_on_reds())
+    # M = many.solve()
+    # N = _None.solve(create_graph_without_red())
+    # S = Some.solve(create_graphs_without_sink_and_without_source())
+
+
+
 # uncomment/comment to enable/disable which problem to solve
 
 # NONE ---- FEW ---- ALTERNATING
-#solve_none()
+solve_none()
 #solve_few()
-solve_alternating()
+#solve_alternating()
 
 # SOME
 #solve_some_using_none()
 
 # MANY
 #solve_many()
+
+
+
 
 
 
