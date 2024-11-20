@@ -8,9 +8,11 @@ class Node:
 
     def addOutgoingEdge(self, edge):
         self.outgoingEdges.add(edge)
-    
+
     def printNode(self):
-        print(f"ID: {self.id} isSource: {self.isSource} isSink: {self.isSink} isRed: {self.isRed}")
+        print(
+            f"ID: {self.id} isSource: {self.isSource} isSink: {self.isSink} isRed: {self.isRed}"
+        )
 
 
 class Edge:
@@ -86,6 +88,9 @@ class Graph:
     def addEdge(self, edge: Edge):
         self.dictOfEdges.update({(edge._from, edge._to): edge})
 
+    def removeEdge(self, edge: Edge):
+        self.dictOfEdges.pop((edge._from, edge._to))
+
     def getNode(self, id):
         return self.dictOfNodes.get(id)
 
@@ -105,4 +110,5 @@ class Graph:
                 print("From: ", edge._from.id)
                 print("To: ", edge._to.id)
                 print("Capacity: ", edge._capacity)
+                print("Flow: ", edge._flow)
             print()
