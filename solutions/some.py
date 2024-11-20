@@ -112,13 +112,9 @@ class Some:
             print("NP-hard")
 
     def create_vertex_split_graph(graph: Graph) -> Graph:
-        # Create a new graph
         new_graph = Graph()
-
-        # Mapping of old nodes to their split counterparts
         node_map = {}
 
-        # Split the nodes
         for node_id, node in graph.dictOfNodes.items():
             # Create the in-node and out-node
             in_node = Node(
