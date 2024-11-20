@@ -11,5 +11,6 @@ class Few:
 
         if dist != maxsize:
             dist += 1 if graph.source.isRed else 0
-            print(dist)
-        else: print(-1)
+            return dist
+        else: 
+            return -1

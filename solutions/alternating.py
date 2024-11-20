@@ -9,9 +9,9 @@ class Alternating:
         path, isPath = pathfinder.find_alternating_path(graph.source, graph.sink, num_nodes)
 
         if not isPath:
-            print("False")
+            return False
         else:
-            print(isPath)
+            return isPath
 
         # -- the following is just for printing the path that was found - useful for debugging
         # for edge in path.values():

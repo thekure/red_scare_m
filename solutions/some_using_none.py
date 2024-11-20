@@ -19,8 +19,8 @@ class Some_Using_None:
             path, pathExists = BFS().find_path(graph.source, graph.sink,
                                                graph.getNumNodes())
             if pathExists:
-                print("True")
+                return True
             else:
-                print("False")
+                return False
         else:
-            print("Unsolvable")
+            return "?!"

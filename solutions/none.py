@@ -19,6 +19,6 @@ class _None:
                 length += 1
                 edge = path.get(current_node.id)
                 current_node = edge.getOther(current_node)
-            print(length)
+            return length
         else:
-            print(-1)
+            return -1

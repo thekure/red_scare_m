@@ -15,11 +15,11 @@ def solve():
         res = many_undirected_acyclic_graph(graph)
 
     if res is None:
-        print("NP-hard")
+        return "?!"
     elif res == -1:
-        print(-1) # no path
+        return -1 # no path
     else:
-        print(res)
+        return res
 
 
 def many_directed_without_negative_cycles(graph):
