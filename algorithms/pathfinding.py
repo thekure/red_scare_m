@@ -102,6 +102,7 @@ class DFS(PathFinder):
 
 
 class BinaryBFS(PathFinder):
+    # This method was written with the help of geeksforgeeks.org
     def find_path(self, graph):
         # use double-ended queue:
         # add node to the front of the deque if its weight is 0
@@ -135,6 +136,7 @@ class BinaryBFS(PathFinder):
 
 
 class BellmanFord(PathFinder):
+    # This method was written with the help of geeksforgeeks.org
     def find_path(self, graph):
         _from = graph.source
         dist = {node_id: maxsize for node_id in graph.dictOfNodes}

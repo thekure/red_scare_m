@@ -1,3 +1,5 @@
+# This Ford-Fulkerson implementation was taken from Silke and Rakuls Bachelors project.
+
 from graphlib.graph import Graph
 from algorithms.pathfinding import BFS, DFS
 

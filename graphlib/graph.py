@@ -1,3 +1,6 @@
+# This Graph implementation was taken from Silke and Rakuls Bachelors project.
+
+
 class Node:
     def __init__(self, id, source=False, sink=False, isRed=False):
         self.id = id
@@ -43,9 +46,9 @@ class Edge:
 
     def compareEdge(self, edge):
         if (
-            self._from is edge._from
-            and self._to is edge._to
-            and self._capacity is edge._capacity
+                self._from is edge._from
+                and self._to is edge._to
+                and self._capacity is edge._capacity
         ):
             return True
         else:
@@ -97,6 +100,7 @@ class Graph:
     def getNumNodes(self):
         return len(self.dictOfNodes.keys())
 
+    # This method was written with the help of chatGPT
     def isCyclic(self):
         """
         Check if the graph contains a cycle.
