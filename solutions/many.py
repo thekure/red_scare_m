@@ -11,7 +11,7 @@ def solve():
     if graph.type == "directed":
         res = many_directed_without_negative_cycles(graph)
     # Undirected Acyclic Graph (~ tree) => one or no path at all between source and sink => use BFS
-    elif graph.type == "undirected" and DFS().is_acyclic(graph):
+    elif graph.type == "undirected" and not graph.isCyclic():
         res = many_undirected_acyclic_graph(graph)
 
     if res is None:
