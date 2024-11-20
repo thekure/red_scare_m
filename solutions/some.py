@@ -15,6 +15,7 @@ For an Undirected Acyclic Graph (tree) => one or no path at all between source a
 class Some:
     def solve(graph_original, graph_without_sink, graph_without_source):
         # easiest scenario
+        is_acyclic = DFS().is_acyclic(graph_original)
         if graph_original.source.isRed or graph_original.sink.isRed:
             path, exists = BFS().find_path(
                 graph_original.source, graph_original.sink, graph_original.getNumNodes()
@@ -24,7 +25,7 @@ class Some:
                 print("True")
                 return
 
-        if graph_original.type == "directed":
+        if graph_original.type == "directed":  # TODO: add check for acyclic
             found = False
             for node in graph_without_sink.dictOfNodes.values():
                 # Skip non-red nodes and source/sink
@@ -54,7 +55,7 @@ class Some:
             if not found:
                 print("False")
 
-        elif graph_original.type == "undirected" and DFS().is_acyclic(graph_original):
+        elif graph_original.type == "undirected" and is_acyclic:
             path, exists = BFS().find_path(
                 graph_original.source, graph_original.sink, graph_original.getNumNodes()
             )
@@ -96,6 +97,7 @@ class Some:
             for vertex in graph_split.dictOfNodes.values():
                 if path_has_been_found:
                     break
+                # print(vertex.id)
                 if vertex.isRed:
                     max_flow = MaxFlow.fordFulkerson(
                         graph=graph_split, find_from=vertex, find_to=maxflow_sink
@@ -109,7 +111,7 @@ class Some:
                 print("False")
 
         else:
-            print("NP-hard")
+            print("?!")
 
     def create_vertex_split_graph(graph: Graph) -> Graph:
         new_graph = Graph()
