@@ -1,3 +1,6 @@
+# This Graph implementation was taken from Silke and Rakuls Bachelors project.
+
+
 class Node:
     def __init__(self, id, source=False, sink=False, isRed=False):
         self.id = id

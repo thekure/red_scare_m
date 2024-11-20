@@ -25,7 +25,9 @@ class Some:
                 print("True")
                 return
 
-        if graph_original.type == "directed" and is_acyclic:  # TODO: add check for acyclic
+        if (
+            graph_original.type == "directed" and is_acyclic
+        ):  # TODO: add check for acyclic
             found = False
             for node in graph_without_sink.dictOfNodes.values():
                 # Skip non-red nodes and source/sink
@@ -112,6 +114,8 @@ class Some:
 
         else:
             print("?!")
+
+    """This method was created with the help of chatGPT"""
 
     def create_vertex_split_graph(graph: Graph) -> Graph:
         new_graph = Graph()
