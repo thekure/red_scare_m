@@ -1,3 +1,15 @@
+# How to generate results.txt and results_500.txt
+
+To generate txt file with all results, from root, open terminal and run:
+
+    python fill_table.py
+
+To generate txt file with only n >= 500 results, instead run:
+
+    python fill_table_500.py
+
+Following these instructions will generate the text files at root.
+
 # How to run the program
 
 To run main.py on an input file:
